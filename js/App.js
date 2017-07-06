@@ -5,25 +5,36 @@ import {
   Text,
   ListView,
   TouchableOpacity,
+  Platform,
+  AsyncStorage,
 } from 'react-native';
 
-export default class App extends Component {
+import TodoCell from './components/TodoCell';
+import { connect } from 'react-redux';
+import { addTodo, doneTodo } from './actions/actions';
+
+class _App extends Component {
   
   constructor(props) {
     super(props);
     let ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 != r2,
+      rowHasChanged: (r1, r2) => r1 !== r2,
     });
     this.state = {
-      dataSource: ds.cloneWithRows([]),
+      dataSource: ds.cloneWithRows(this.props.todos == null ? [] : this.props.todos),
     };
-    this.items = [];
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(Object.assign({}, nextProps.todos)),
+    });
+  } 
 
   renderRow(row, sectionid, rowid) {
     return (
       <View style={styles.row}>
-        <Text>{row.title}</Text>
+        <TodoCell todo={row} onDone={this.props.onDone.bind(this, row)} />
       </View>
     );
   }
@@ -41,10 +52,7 @@ export default class App extends Component {
         <TouchableOpacity
           style={styles.fab}
           onPress={() => {
-            this.items.push({title: 'Title', done: false})
-            this.setState({
-              dataSource: this.state.dataSource.cloneWithRows(this.items),
-            });
+            this.props.addTodo({title: 'Title', done: false});
           }}
         >
           <Text>+</Text>
@@ -58,13 +66,12 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: '#AAA',
+    marginTop: (Platform.OS === 'ios') ? 20 : 0,
+    paddingHorizontal: 8,
+    paddingTop: 8,
   },
   row: {
-    flex: 0,
-    flexDirection: 'row',
-    backgroundColor: 'red',
-    alignItems: 'flex-start',
-    minHeight: 40,
+    flex: 1,
   },
   fab: {
     position: 'absolute',
@@ -83,3 +90,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 5.0,
   }
 });
+
+function mapStateToProps(state) {
+  return {
+    todos: state.todos,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addTodo: (todo) => dispatch(addTodo(todo)),
+    onDone: (todo) => dispatch(doneTodo(todo)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(_App);
