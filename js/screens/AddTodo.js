@@ -95,7 +95,7 @@ class _AddTodo extends Component {
                     }, styles.fab]}
           >
             <TouchableOpacity
-              style={{flex: 1, justifyContent: 'center', width: 50,}}
+              style={{flex: 1, justifyContent: 'center', width: 47,}}
               onPress={() => {
                 if (this.refs.textInput == null || this.todo == null || this.todo.length == 0) {
                   Keyboard.dismiss();

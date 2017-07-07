@@ -59,7 +59,7 @@ class _App extends Component {
             });
           }}
         >
-          <Text>+</Text>
+          <Text style={{color: 'white'}}>+</Text>
         </TouchableOpacity>
       </View>
     );
@@ -69,7 +69,6 @@ class _App extends Component {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    backgroundColor: '#AAA',
     paddingHorizontal: 8,
     paddingTop: 8,
   },
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
     bottom: 16,
     width: 50,
     height: 50,
-    backgroundColor: 'green',
+    backgroundColor: '#C678D2',
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',

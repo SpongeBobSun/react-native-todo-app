@@ -12,10 +12,11 @@ export default class TodoCell extends Component {
   }
 
   render() {
+    let dotStyle = this.props.todo.done ? styles.checkedDot : styles.uncheckedDot;
     return (
-      <View style={[styles.wrapper, {backgroundColor: this.props.todo.done ? 'green' : 'red'}]}>
+      <View style={{flex: 1}}>
         <TouchableOpacity
-          style={{flex: 1}}
+          style={styles.wrapper}
           onPress={() => {
             if (!this.props.todo.done) {
               this.props.onDone();
@@ -24,7 +25,14 @@ export default class TodoCell extends Component {
             }
           }}
         >
-        <Text>{this.props.todo.title}</Text>
+        <View 
+          style={{flex: 1, alignContent: 'center', flexDirection: 'row'}}
+          >
+          <View style={dotStyle} />
+          <View style={{justifyContent: 'center'}}>
+            <Text style={{textAlignVertical: 'center'}}>{this.props.todo.title}</Text>
+          </View>
+        </View>
         </TouchableOpacity>
       </View>
     );
@@ -34,8 +42,30 @@ export default class TodoCell extends Component {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    flexDirection: 'row',
     alignItems: 'flex-start',
-    minHeight: 40,
+    justifyContent: 'center',
+    minHeight: 50,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: '#BBBBBB',
+    paddingVertical: 8,
+  },
+  checkedDot: {
+    flex: 0,
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+    borderColor: '#61AFEF',
+    backgroundColor: '#4692E3',
+    borderRadius: 15,
+    alignSelf: 'center',
+  },
+  uncheckedDot: {
+    flex: 0,
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+    borderColor: '#61AFEF',
+    borderRadius: 15,
+    alignSelf: 'center',
   },
 });
