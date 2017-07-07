@@ -8,15 +8,18 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
 } from 'react-native';
-import AppRoot from './js';
 
-export default class Todo extends Component {
-  render() {
-    return (
-      <AppRoot />
-    );
-  }
-}
+import { Navigation } from 'react-native-navigation';
 
+import { registerScreens } from './js';
 
-AppRegistry.registerComponent('Todo', () => Todo);
+registerScreens();
+
+Navigation.startSingleScreenApp({
+  screen: {
+    screen: 'todo.MainScreen',
+    title: 'Todo',
+    navigatorStyle: {},
+    navigatorButtons: {},
+  },
+})

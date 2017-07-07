@@ -52,7 +52,11 @@ class _App extends Component {
         <TouchableOpacity
           style={styles.fab}
           onPress={() => {
-            this.props.addTodo({title: 'Title', done: false});
+            // this.props.addTodo({title: 'Title', done: false});
+            this.props.navigator.showModal({
+              screen: 'todo.AddTodo',
+              title: 'New Todo',
+            });
           }}
         >
           <Text>+</Text>
@@ -66,7 +70,6 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     backgroundColor: '#AAA',
-    marginTop: (Platform.OS === 'ios') ? 20 : 0,
     paddingHorizontal: 8,
     paddingTop: 8,
   },
