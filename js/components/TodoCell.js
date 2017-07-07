@@ -19,6 +19,8 @@ export default class TodoCell extends Component {
           onPress={() => {
             if (!this.props.todo.done) {
               this.props.onDone();
+            } else {
+              this.props.onUncheck();
             }
           }}
         >

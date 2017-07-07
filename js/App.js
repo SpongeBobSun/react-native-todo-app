@@ -11,7 +11,7 @@ import {
 
 import TodoCell from './components/TodoCell';
 import { connect } from 'react-redux';
-import { addTodo, doneTodo } from './actions/actions';
+import { addTodo, doneTodo, uncheck } from './actions/actions';
 
 class _App extends Component {
   
@@ -34,7 +34,7 @@ class _App extends Component {
   renderRow(row, sectionid, rowid) {
     return (
       <View style={styles.row}>
-        <TodoCell todo={row} onDone={this.props.onDone.bind(this, row)} />
+        <TodoCell todo={row} onDone={this.props.onDone.bind(this, row)} onUncheck={this.props.onUncheck.bind(this, row)} />
       </View>
     );
   }
@@ -104,6 +104,7 @@ function mapDispatchToProps(dispatch) {
   return {
     addTodo: (todo) => dispatch(addTodo(todo)),
     onDone: (todo) => dispatch(doneTodo(todo)),
+    onUncheck: (todo) => dispatch(uncheck(todo)),
   };
 }
 

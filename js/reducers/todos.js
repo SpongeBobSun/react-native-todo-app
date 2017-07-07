@@ -8,7 +8,7 @@ export default function todos(state = initialState, action) {
     case ActionsConstants.ADD_TODO:
       todos.push(action.data);
       return todos;
-    case ActionsConstants.DONE_TODO:
+    case ActionsConstants.DONE_TODO: {
       let index = todos.indexOf(action.data);
       if (index < 0) {
         return state;
@@ -18,6 +18,18 @@ export default function todos(state = initialState, action) {
       delete todos[index];
       todos[index] = done;
       return todos;
+    }
+    case ActionsConstants.UNCHECK: {
+      let index = todos.indexOf(action.data);
+      if (index < 0) {
+        return state;
+      }
+      let uncheck = Object.assign({}, action.data);
+      uncheck.done = false;
+      delete todos[index];
+      todos[index] = uncheck;
+      return todos;
+    }
     default:
       return state;
   }
