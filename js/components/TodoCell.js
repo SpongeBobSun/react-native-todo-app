@@ -30,7 +30,7 @@ export default class TodoCell extends Component {
           >
           <View style={dotStyle} />
           <View style={{justifyContent: 'center'}}>
-            <Text style={{textAlignVertical: 'center'}}>{this.props.todo.title}</Text>
+            <Text style={{textAlignVertical: 'center', marginLeft: 8}}>{this.props.todo.title}</Text>
           </View>
         </View>
         </TouchableOpacity>
