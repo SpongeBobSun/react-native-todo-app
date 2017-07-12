@@ -9,7 +9,7 @@
 
 ----
 
-## Before we start - LifeCycles
+## Before we start - Component LifeCycle
 <img src='./img/component-lifecycle.jpg' style="width: 60%;" />
 
 ----
@@ -68,7 +68,8 @@
 
 ## Create Project and add dependencies.
 
-* react-native init [project]
+* react-native init [*project*]
+* cd [*project*]
 * yarn start
 * react-native run-ios
 
@@ -81,9 +82,10 @@
 
 ----
 
-## Use a `ListView`
+## Using `ListView`
 
 * dataSource
+	* rowHasChanged: determine re-render row or not. [Reference](https://github.com/facebook/react-native/blob/master/Libraries/Lists/ListView/ListView.js#L81)
 * renderRow
 
 
@@ -92,9 +94,31 @@
 | dataSource   | dataSource            | adapter                             |
 | renderRow    | cellForRowAtIndexPath | onCreate/BindViewHolder |
 
-
+* Update list
 * *Reuse issues*
 
+----
+
+### ListView Callbacks
+* onEndReached
+* renderFooter
+* renderHeader
+* renderSectionHeader
+* renderSeperator
+
+----
+
+## Add a button
+
+* TouchableOpacity
+
+    There is no such widget as 'Button' or 'UIButton'. 
+    Using `Touchable*` combining with `Text` or `Image` as replacement.
+    
+    
+* onPress
+
+	Callback when pressed.
 ----
 
 ## Using flexbox
@@ -128,13 +152,14 @@ Distribution of children along `primary axis`.
 
 ## 有图有真相
 * flexDirection: 'row'
-<img src='./img/justifyContent.png' style="width: 50%"/>
+<img src='./img/justifyContent.png' style="width: 60%"/>
 
 ----
 
 ## *alignItems*
 ```text
-A component's style determines the alignment of children along the secondary axis
+A component's style determines the alignment of children
+along the secondary axis
 ```
 |     Value     |     Column direction     |      Row direction     |
 | ------------- | ------------------------ | ---------------------- |
@@ -168,22 +193,20 @@ A component's style determines the alignment of children along the secondary axi
 * Modify Android project
 
 ----
+## Add reference to widget
+	
+* ref={'name'}
+* ref={(view) => {this.view = view}}
+
+----
 
 ## Navigations
 
 * react-native-navigation
 * react-navigation
 * [Glow] NativeNavigator
+	* Push / present *new* view controller or activity
 
-----
-
-## Widgets & Animations
-
-* View
-* Text
-* *Touchables*
-* Images
-* etc
 ----
 
 ## Deal with keyboard
@@ -198,6 +221,15 @@ A component's style determines the alignment of children along the secondary axi
 * Backkey
 * Navigation
 * Performance
+
+----
+
+## Pitfalls
+
+* ListView reusing issue
+* Image
+* Image cache
+* Modal present [issue](https://github.com/facebook/react-native/issues/10471)
 
 ----
 
