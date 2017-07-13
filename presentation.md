@@ -1,3 +1,5 @@
+<!-- $theme: default -->
+
 # React Native - Quick Start
 
 ----
@@ -10,7 +12,7 @@
 ----
 
 ## Before we start - Component LifeCycle
-<img src='./img/component-lifecycle.jpg' style="width: 60%;" />
+<img src='./img/component-lifecycle.jpg' style="width: 60%; margin: auto; display: block" />
 
 ----
 * getDefaultProps
@@ -44,7 +46,7 @@
 | componentWillMount | viewWillAppear          | onStart                 |
 | componentDidMount  | viewDidAppear           | onResume                |
 | render             | drawInRect / other code | onDraw / onCreateView   |
-| componentWillUnmount | viewWillDisappear     | onPause / onStop / onDestroy  |
+| componentWillUnmount | view Will / Did Disappear / Undload / dealloc    | onPause / onStop / onDestroy  |
 
 ----
 
@@ -84,9 +86,9 @@
 
 ## Using `ListView`
 
-* dataSource
+* dataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 	* rowHasChanged: determine re-render row or not. [Reference](https://github.com/facebook/react-native/blob/master/Libraries/Lists/ListView/ListView.js#L81)
-* renderRow
+* renderRow(rowData, sectionID, rowID, highlightRow)
 
 
 | React Native | iOS                   | Android                             |
@@ -186,6 +188,10 @@ along the secondary axis
 
 ----
 
+<img src='./img/react-redux-workflow.png' style='width: 90%;'/>
+
+----
+
 ## Using a third party lib
 
 * Add JS dependency
@@ -202,8 +208,8 @@ along the secondary axis
 
 ## Navigations
 
-* react-native-navigation
 * react-navigation
+* react-native-navigation
 * [Glow] NativeNavigator
 	* Push / present *new* view controller or activity
 
@@ -213,7 +219,18 @@ along the secondary axis
 
 * KeyboardAvoidingView
 * *Keyboard* module
+* Dismiss keyboard in `ScrollView` or `ListView`
+  * keyboardDismissMode: one of ['none', 'interactive', 'on-drag']
 
+----
+
+## AsyncStorage
+
+* getItem(key: string, callback?: ?(error: ?Error, result: ?string) => void)
+* setItem(key: string, value: string, callback?: ?(error: ?Error) => void)
+* removeItem(key: string, callback?: ?(error: ?Error) => void)
+* clear(callback?: ?(error: ?Error) => void)
+* getAllKeys(callback?: ?(error: ?Error, keys: ?Array<string>) => void)
 ----
 ## Android Support
 
@@ -228,8 +245,57 @@ along the secondary axis
 
 * ListView reusing issue
 * Image
+  * source props
+    * local asset
+    * remote file
+    * size
+  * image size
 * Image cache
+  ```objc
+  @implementation RCTImageCache
+  {
+    NSOperationQueue *_imageDecodeQueue;
+    NSCache *_decodedImageCache;
+  }
+  ```
 * Modal present [issue](https://github.com/facebook/react-native/issues/10471)
+
+----
+
+## Pitfalls - pt.2
+
+* AsyncStorage
+  * *async*
+  * Dump and load
+* Type check
+	```javascript
+    render() {
+      if (this.state.hidden || this.state.data == null){
+        return null;
+      }
+      ...
+      return (
+      ...
+      <SemiboldText style={styles.title}>{
+              // $FlowFixMe
+              this.state.data.title
+            }</SemiboldText>
+      ...
+      );
+    }
+    ```
+* Number.MAX_SAFE_INTEGER
+
+----
+## Pitfalls - pt.3
+
+* ActionSheets
+  * *PopupMenuAndroid* on Android
+  * UIAlertController on iOS
+* UI & StyleSheet inconsistent on iOS and Android
+	* overflow: 'visible'
+	* cornerRadius
+	* etc
 
 ----
 
